@@ -11,9 +11,6 @@ class ListNode{
 	}
 }
 
-
-
-
 public class AddTwoNumbers {
 
 	public static ListNode addTwoNo(ListNode l1,ListNode l2){
