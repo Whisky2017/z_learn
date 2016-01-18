@@ -1,0 +1,4 @@
+2016-01-11 15:08:57 [main] [com.alibaba.druid.pool.DruidDataSource] [ERROR] - testWhileIdle is true, validationQuery not set
+
+2016-01-11 15:09:32 [main] [com.alibaba.druid.pool.DruidDataSource] [ERROR] - testWhileIdle is true, validationQuery not set
+
