@@ -35,8 +35,8 @@ public class TestKNN {
 		
 		TestKNN t = new TestKNN();
 		
-		String datafile = new File("").getAbsolutePath() + File.separator + "data\\datafile.txt";
-		String testfile = new File("").getAbsolutePath() + File.separator + "data\\testfile.txt";
+		String datafile = new File("").getAbsolutePath() + File.separator + "data\\KNNdata.txt";
+		String testfile = new File("").getAbsolutePath() + File.separator + "data\\KNNtest.txt";
 		
 		List<List<Double>> datas = new ArrayList<List<Double>>();
 		List<List<Double>> testDatas = new ArrayList<List<Double>>();
