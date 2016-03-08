@@ -206,7 +206,7 @@ public class NaiveBayesianClassifier {
 	 * @return 分类的准确率
 	 * @throws Exception 
 	 */
-	private double computeAccuracy(String classifyRightCate,
+	public double computeAccuracy(String classifyRightCate,
 			String classifyResultFileNew) throws Exception {
 		
 		Map<String,String> rightCate = new TreeMap<String, String>();
