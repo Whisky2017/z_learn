@@ -1,0 +1,17 @@
+各个类的说明：
+	1、DataPreProcesss 数据预处理类  
+		将原始数据从E:/DataMiningSample/orginSample 处理到E:/DataMiningSample/processedSample
+	2、CreateTrainAndTestSample 创建训练和测试数据集
+	3、ComputeWordsVector 计算文档的属性向量，将所有文档向量化
+	4、NaiveBayesianClassifier 朴素贝叶斯分类算法实现
+	5、KNNClassifier K最近邻分类算法实现
+
+程序运行说明：
+	用eclipse打开程序，将并将newsgroup文档集解压到E:\DataMiningSample\orginSample目录下
+	同时在E:\DataMiningSample\下建好如下目录：
+		E:\DataMiningSample\processedSampleOnlySpecial
+		E:\DataMiningSample\TestSample0 (0-9)个文件
+		E:\DataMiningSample\TrainSample0 (0-9)个文件
+		E:\DataMiningSample\docVector
+	停用词表也放在"F:/DataMiningSample/目录下，即可运行eclipse工程。
+	程序会依次执行数据预处理、贝叶斯分类、KNN分类，输出10次交叉验证实验的分类结果、准确率统计及混淆矩阵。
