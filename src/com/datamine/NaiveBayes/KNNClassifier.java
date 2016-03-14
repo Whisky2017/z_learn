@@ -39,7 +39,7 @@ public class KNNClassifier {
 		while((line = trainSampleBR.readLine()) != null){
 			lineSplitBlock = line.split(" ");
 			trainWordTFMap.clear();
-			for(int i =2 ;i<lineSplitBlock.length;i++){
+			for(int i =2 ;i<lineSplitBlock.length;i = i+2){
 				trainWordTFMap.put(lineSplitBlock[i], Double.valueOf(lineSplitBlock[i+1]));
 			}
 			TreeMap<String,Double> tempMap = new TreeMap<String, Double>();
@@ -55,7 +55,7 @@ public class KNNClassifier {
 		while((line = testSampleBR.readLine()) != null){
 			lineSplitBlock = line.split(" ");
 			testWordTFMap.clear();
-			for(int i =2;i<lineSplitBlock.length;i++){
+			for(int i =2;i<lineSplitBlock.length;i = i+2){
 				testWordTFMap.put(lineSplitBlock[i], Double.valueOf(lineSplitBlock[i+1]));
 			}
 			TreeMap<String,Double> tempMap = new TreeMap<String, Double>();
@@ -63,9 +63,6 @@ public class KNNClassifier {
 			testFileNameWordTFMap.put(lineSplitBlock[0]+"_"+lineSplitBlock[1], tempMap);
 		}
 		testSampleBR.close();
-		
-		//分类形成的 testClassifyCateMap<文件名,类目>
-		Map<String,String> testClassifyCateMap = new TreeMap<String, String>();
 		
 		//下面遍历每一个测试样例计算所有训练样本的距离，做分类
 		String classifyResult;
@@ -80,7 +77,6 @@ public class KNNClassifier {
 			
 			knnClassifyResultWriter.append(me.getKey()+" "+classifyResult+"\n");
 			knnClassifyResultWriter.flush();
-			testClassifyCateMap.put(me.getKey(), classifyResult);
 		}
 		knnClassifyResultWriter.close();
 	}
@@ -193,8 +189,8 @@ public class KNNClassifier {
 
 	/**
 	 * 根据knn算法分类结果文件生成正确类目文件，而正确率和混淆矩阵的计算可以复用贝叶斯算法中的方法
-	 * @param knnResultFile 分类结果文件
-	 * @param knnRightFile 分类正确类目文件
+	 * @param knnResultFile 分类结果文件   <"目录名_文件名",分类结果>
+	 * @param knnRightFile 分类正确类目文件  <"目录名_文件名",正确结果>
 	 * @throws IOException 
 	 */
 	private void createRightFile(String knnResultFile, String knnRightFile) throws IOException {
@@ -230,12 +226,13 @@ public class KNNClassifier {
 		
 		wordMap = computeWV.countWords("E:\\DataMiningSample\\processedSample", wordMap);
 		IDFPerWordMap = computeWV.computeIDF("E:\\DataMiningSample\\processedSampleOnlySpecial", wordMap);
+		//IDFPerWordMap=null;
 		computeWV.printWordMap(wordMap);
 		
 		// 首先生成KNN算法10次试验需要的文档TF矩阵文件
 		for (int i = 0; i < 1; i++) {
 			
-			computeWV.computeTFMultiIDF("E:/DataMiningSample/processedSampleOnlySpecial", 0.8, i, IDFPerWordMap, wordMap);
+			computeWV.computeTFMultiIDF("E:/DataMiningSample/processedSampleOnlySpecial", 0.9, i, IDFPerWordMap, wordMap);
 			
 			String trainFiles = "E:\\DataMiningSample\\docVector\\wordTFIDFMapTrainSample"+i;
 			String testFiles = "E:/DataMiningSample/docVector/wordTFIDFMapTestSample"+i;

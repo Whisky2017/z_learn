@@ -86,8 +86,8 @@ public class ComputeWordsVector {
 					Map.Entry<String, Double> me = mt.next();
 					
 					//由于计算IDF非常耗时，3万多个词的属性词典初步估计需要25个小时，先尝试认为所有词的IDF都是1的情况
-					wordWeight = (me.getValue() / wordSumPerDoc) * iDFPerWordMap.get(me.getKey());
-					//wordWeight = (me.getValue() / wordSumPerDoc) * 1.0;
+					//wordWeight = (me.getValue() / wordSumPerDoc) * iDFPerWordMap.get(me.getKey());
+					wordWeight = (me.getValue() / wordSumPerDoc) * 1.0;
 					TFPerDocMap.put(me.getKey(), wordWeight);
 				}
 				
@@ -248,11 +248,11 @@ public class ComputeWordsVector {
 		//wordsVector.printWordMap(newWordMap);
 		//wordsVector.computeIDF(strDir, newWordMap);
 		
-//		double trainSamplePercent = 0.8;
-//		int indexOfSample = 1;
-//		Map<String, Double> iDFPerWordMap = null;
-//		
-//		wordsVector.computeTFMultiIDF(strDir, trainSamplePercent, indexOfSample, iDFPerWordMap, newWordMap);
+		double trainSamplePercent = 0.8;
+		int indexOfSample = 1;
+		Map<String, Double> iDFPerWordMap = null;
+		
+		wordsVector.computeTFMultiIDF(strDir, trainSamplePercent, indexOfSample, iDFPerWordMap, newWordMap);
 		
 		//test();
 	}
