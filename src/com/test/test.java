@@ -1,28 +1,49 @@
 package com.test;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.util.Scanner;
 
 public class test {
-
-	public static void main(String[] args) {
+	
+	
+	public static String readFile(String fileName, String encoding) throws Exception{
 		
-		while(true){
-			
-			Scanner cin = new Scanner(System.in);
-			int X1=cin.nextInt(); //面积
-			int X2=cin.nextInt();	//室
-			int X3=cin.nextInt();	//片区
-			//int X4=cin.nextInt();	//小区
-			int X4=cin.nextInt();	//楼层
-			int X5=cin.nextInt();	//装修情况
-			int X6=cin.nextInt();	//城区
-			int X7=cin.nextInt();	//厅
-			double Y = 0;
-			
-			Y=-1767.644+170.009*X1-2465.434*X2-40.755*X3+69.508*X4+561.089*X5-344.594*X6-539.347*X7;
-			
-			System.out.println(Y);
+		File file = new File(fileName);
+		
+		FileInputStream inStream = new FileInputStream(file);
+		BufferedReader reader = new BufferedReader(new InputStreamReader(
+				inStream,encoding));
+		String line = new String();
+		String text = new String();
+		
+		while((line = reader.readLine()) != null){
+			text += line;
 		}
+		reader.close();
+		
+		return text;
+	}
+
+	public static void main(String[] args) throws Exception {
+		
+		String fileName = "c:\\test.txt";
+		String encoding = "UTF-8";
+		String result = readFile(fileName,encoding);
+		
+		String[] s = result.split(",");
+		int [] r = new int[s.length];
+		for(int i=0;i<s.length;i++){
+			
+			if(s[i].contains("."))
+				System.out.println("这是ip"+s[i]);
+			else
+				System.out.println("这是数字"+s[i]);
+		}
+		
+		
 		
 	}
 	
