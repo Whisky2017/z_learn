@@ -107,7 +107,10 @@ public class Lucene {
 			System.out.println();
 			
 			try{
+				//首先，我们需要定义一个词法分析器。
 				analyzer = new StandardAnalyzer(Version.LUCENE_CURRENT);
+				
+				//第二步，确定索引文件存储的位置，Lucene提供给我们两种方式：
 				directory = FSDirectory.open(new File(INDEX_DIR));
 				
 				File indexFile = new File(INDEX_DIR);
@@ -115,9 +118,11 @@ public class Lucene {
 					indexFile.mkdir();
 				}
 				
+				//第三步，创建IndexWriter，进行索引文件的写入。
 				IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_CURRENT,analyzer);
 				indexWriter = new IndexWriter(directory, config);
 				
+				//第四步，内容提取，进行索引的存储。
 				Document document = new Document();
 				document.add(new TextField("filename", file.getName(),Store.YES));
 				document.add(new TextField("content", content, Store.YES));
@@ -157,11 +162,17 @@ public class Lucene {
 	public static void searchIndex(String text) {
 		Date date1 = new Date();
 		try {
+			
 			directory = FSDirectory.open(new File(INDEX_DIR));
 			analyzer = new StandardAnalyzer(Version.LUCENE_CURRENT);
+			
+			//第一步，打开存储位置
 			DirectoryReader ireader = DirectoryReader.open(directory);
+			
+			//第二步，创建搜索器
 			IndexSearcher isearcher = new IndexSearcher(ireader);
 
+			//第三步，类似SQL，进行关键字查询
 			QueryParser parser = new QueryParser(Version.LUCENE_CURRENT,
 					"content", analyzer);
 			Query query = parser.parse(text);
@@ -176,6 +187,7 @@ public class Lucene {
 				System.out.println(hitDoc.get("path"));
 				System.out.println("____________________________");
 			}
+			//第四步，关闭查询器等。
 			ireader.close();
 			directory.close();
 		} catch (Exception e) {
