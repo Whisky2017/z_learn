@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.mahout.cf.taste.impl.common.LongPrimitiveIterator;
 import org.apache.mahout.cf.taste.impl.model.file.FileDataModel;
 import org.apache.mahout.cf.taste.impl.neighborhood.NearestNUserNeighborhood;
+import org.apache.mahout.cf.taste.impl.recommender.GenericBooleanPrefUserBasedRecommender;
 import org.apache.mahout.cf.taste.impl.recommender.GenericUserBasedRecommender;
 import org.apache.mahout.cf.taste.impl.similarity.PearsonCorrelationSimilarity;
 import org.apache.mahout.cf.taste.model.DataModel;
@@ -40,13 +41,13 @@ public class UserCF {
 		DataModel model = new FileDataModel(new File(file));
 		
 		//使用皮尔松算法计算用户之间的相似度
-		UserSimilarity user = new PearsonCorrelationSimilarity(model);
+		UserSimilarity userSimilarity = new PearsonCorrelationSimilarity(model);
 		
 		//通过相似度 和N 计算出最近邻N个用户
-		NearestNUserNeighborhood neighbor = new NearestNUserNeighborhood(NEIGHBORHOOD_NUM, user, model);
+		NearestNUserNeighborhood neighbor = new NearestNUserNeighborhood(NEIGHBORHOOD_NUM, userSimilarity, model);
 	
-		//基于用户的推荐算法 推荐
-		Recommender r = new GenericUserBasedRecommender(model, neighbor, user);
+		//够着推荐引擎  基于用户的推荐算法 推荐
+		Recommender r = new GenericUserBasedRecommender(model, neighbor, userSimilarity);
 		
 		//迭代获取用户的id
 		LongPrimitiveIterator it = model.getUserIDs();
