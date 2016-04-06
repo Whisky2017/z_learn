@@ -4,11 +4,13 @@ import java.io.File;
 import java.util.List;
 
 import org.apache.mahout.cf.taste.impl.common.LongPrimitiveIterator;
+import org.apache.mahout.cf.taste.impl.model.GenericBooleanPrefDataModel;
 import org.apache.mahout.cf.taste.impl.model.file.FileDataModel;
 import org.apache.mahout.cf.taste.impl.neighborhood.NearestNUserNeighborhood;
 import org.apache.mahout.cf.taste.impl.recommender.GenericBooleanPrefUserBasedRecommender;
 import org.apache.mahout.cf.taste.impl.recommender.GenericUserBasedRecommender;
 import org.apache.mahout.cf.taste.impl.similarity.PearsonCorrelationSimilarity;
+import org.apache.mahout.cf.taste.impl.similarity.TanimotoCoefficientSimilarity;
 import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 import org.apache.mahout.cf.taste.recommender.Recommender;
@@ -38,10 +40,16 @@ public class UserCF {
 		String file = "data/CF.data";
 		
 		//建立数据模型
-		DataModel model = new FileDataModel(new File(file));
+		DataModel datamodel = new FileDataModel(new File(file));
+		
+		//忽略偏好值
+		GenericBooleanPrefDataModel model = new GenericBooleanPrefDataModel(GenericBooleanPrefDataModel.toDataMap(datamodel));
 		
 		//使用皮尔松算法计算用户之间的相似度
-		UserSimilarity userSimilarity = new PearsonCorrelationSimilarity(model);
+		//UserSimilarity userSimilarity = new PearsonCorrelationSimilarity(model);
+		
+		//忽略偏好值
+		UserSimilarity userSimilarity = new TanimotoCoefficientSimilarity(model);
 		
 		//通过相似度 和N 计算出最近邻N个用户
 		NearestNUserNeighborhood neighbor = new NearestNUserNeighborhood(NEIGHBORHOOD_NUM, userSimilarity, model);
