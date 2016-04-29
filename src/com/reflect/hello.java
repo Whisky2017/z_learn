@@ -1,50 +1,27 @@
 package com.reflect;
 
-import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
-
-interface fruit{
-	public abstract void eat();
-}
-
-class Apple implements fruit{
-	public void eat(){
-		System.out.println("Apple");
-	}
-}
-
-class Orange implements fruit{
-	public void eat(){
-		System.out.println("Orange");
-	}
-}
+import java.lang.reflect.Modifier;
 
 
-class Factory{
-	public static fruit getInstance(Class<?> Clazz) throws Exception{
-		fruit f = null;
-//		if("Apple".equals(fruitName))
-//			f = new Apple();
-//		if("Orange".equals(fruitName))
-//			f = new Orange();
-		
-		//f= (fruit) Class.forName(ClassName).newInstance();
-		f = (fruit) Clazz.newInstance();
-		return f;
-	}
-}
-
-class hello {
+public class hello {
 	
 	public static void main(String[] args) throws Exception {
 		
-//		fruit f = Factory.getInstance("Orange");
-//		f.eat();
-		fruit f = Factory.getInstance(Apple.class);
-		if(f!=null)
-			f.eat();
+		Class<?> demo = null;
+		Class<?> demo1 = null;
+		Class<?> demo2 = null;
+		demo = Class.forName("com.reflect.Person");
+		demo1 = Person.class;
+		demo2 = new Person().getClass();
 		
+		Method method = demo.getMethod("sayChina");
+		method.invoke(demo.newInstance());
+		
+		method = demo.getMethod("sayHello", String.class,int.class);
+		method.invoke(demo.newInstance(), "xiaojiang",27);
 	}
 
 }

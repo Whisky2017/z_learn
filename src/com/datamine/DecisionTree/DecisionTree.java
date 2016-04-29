@@ -26,11 +26,13 @@ public class DecisionTree {
         
         TreeNode node = new TreeNode();
         String result = InfoGain.IsPure(InfoGain.getTarget(data)); //获取数据的target 并判断是否为一种结果
-        if(result != null){
+        
+        if(result != null){ //result不为空的时候 result的值为一个数
             node.setNodeName("leafNode");
             node.setTargetFunValue(result);
             return node;
         }
+        
         if(attributeList.size() == 0){
             node.setTargetFunValue(result);
             return node;
