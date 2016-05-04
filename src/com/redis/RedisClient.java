@@ -67,7 +67,7 @@ public class RedisClient {
 	
 	public void show(){
 		
-		//KeyOperate();
+		KeyOperate();
 		//StringOperate();
 		//ListOperate();
 		//SetOperate();
@@ -76,10 +76,10 @@ public class RedisClient {
 		//jedis.flushDB();
 		
 		//System.out.println(jedis.flushDB()); 
-		jedis.del("seurl-20151228");
+		//jedis.del("seurl-20151228");
 		
-		jedisPool.returnResource(jedis);
-		shardedJedisPool.returnResource(shardedJedis);
+		//jedisPool.returnResource(jedis);
+		//shardedJedisPool.returnResource(shardedJedis);
 	}
 
 	private void HashOperate() {
